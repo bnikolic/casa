@@ -593,7 +593,7 @@ macro (casa_add_google_test)
                             LIBRARIES ${libraries} # gtest + provide libs
                             INCLUDE_DIRS ${gtestIncludeDirectory}) # gtest include dirs
 
-        add_dependencies (${CasaTestName} ${GoogleTest_Target})
+#    add_dependencies (${CasaTestName} ${GoogleTest_Target})
 
     endif ()
 

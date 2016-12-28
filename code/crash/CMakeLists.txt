@@ -1,5 +1,5 @@
 if (UseCrashReporter)
-    casa_add_executable (NONE CrashReportPoster apps/reporter/CrashReportPoster.cc ${Breakpad_IncludeRoot}/common/linux/http_upload.cc)
+    casa_add_executable (NONE CrashReportPoster apps/reporter/CrashReportPoster.cc ${PC_BREAKPAD_INCLUDEDIR}/common/linux/http_upload.cc)
     target_link_libraries (CrashReportPoster -ldl)
-    target_include_directories (CrashReportPoster PUBLIC ${Breakpad_IncludeRoot})
+    target_include_directories (CrashReportPoster PUBLIC ${PC_BREAKPAD_INCLUDEDIR})
 endif ()

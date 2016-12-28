@@ -220,6 +220,12 @@ casa_add_library( casaqt
   QwtPlotter/QPShape.cc
   QwtPlotter/QPTool.cc
   )
+
+if (UseCrashReporter)
+   # Note the prefix with lib introduced by casa_add_library
+   target_link_libraries (libcasaqt general ${PC_BREAKPAD_LIBRARIES} ${PC_BREAKPAD_CLIENT_LIBRARIES})
+endif ()
+
 install (FILES
 	PlotterImplementations/PlotterImplementations.h
 	DESTINATION include/casacode/casaqt/QwtPlotter

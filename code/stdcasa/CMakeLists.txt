@@ -28,8 +28,9 @@ casa_add_library( stdcasa
 	${CMAKE_CURRENT_BINARY_DIR}/version.cc
 	)
 if (UseCrashReporter)
-    target_include_directories (libstdcasa PUBLIC ${Breakpad_IncludeRoot})
-    target_link_libraries (libstdcasa general ${Breakpad_Library})
+    target_include_directories (libstdcasa PUBLIC ${PC_BREAKPAD_INCLUDE_DIRS})
+    target_link_libraries (libstdcasa general ${PC_BREAKPAD_LIBRARIES} ${PC_BREAKPAD_CLIENT_LIBRARIES})
+    target_compile_options(libstdcasa PUBLIC ${PC_BREAKPAD_CFLAGS_OTHER})    
 endif ()
 
 if (UseCrashReporter)

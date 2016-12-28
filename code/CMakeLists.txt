@@ -71,7 +71,7 @@ include( CASA )
 set( CASA_VERSION_MAJOR   5   )
 set( CASA_VERSION_MINOR   0   )
 set( CASA_VERSION_PATCH   0   )
-set( CASA_VERSION_FEATURE 0 CACHE STRING "feature version" )
+set( CASA_VERSION_FEATURE 38314 CACHE STRING "feature version" )
 set( CASA_VERSION_DESC    "" )
 
 if( CASA_VERSION_FEATURE STREQUAL "0" )
@@ -1075,9 +1075,12 @@ if ( ${dbusxx} STREQUAL dbus-c++ )
   # Debian arch specific header location (64 bit only)
   list( APPEND dbus_prefix /usr/lib/x86_64-linux-gnu/dbus-1.0)
 
+  find_package(PkgConfig)
+  pkg_check_modules(PC_DBUS QUIET dbus-1)
+
   casa_find( DBUSXX_ARCH
     INCLUDES dbus/dbus-arch-deps.h
-    PREFIX_HINTS /usr/lib64/dbus-1.0 ${DBUS_ARCH_DIR} ${dbus_prefix}
+    PREFIX_HINTS /usr/lib64/dbus-1.0 ${DBUS_ARCH_DIR} ${dbus_prefix} ${PC_DBUS_INCLUDE_DIRS}/../
     NO_CHECK   # This header does not compile if included directly
     NO_REQUIRE
     IGNORE /usr/lib64/casapy
@@ -1308,7 +1311,7 @@ casa_find( LIBSAKURA
 #                         #
 ###########################
 
-include (GoogleTestInstall)
+
 
 #########################
 #                       #
@@ -1316,7 +1319,10 @@ include (GoogleTestInstall)
 #                       #
 #########################
 
-include (BreakpadInstall)
+find_package(PkgConfig)
+pkg_check_modules(PC_BREAKPAD QUIET breakpad)
+pkg_check_modules(PC_BREAKPAD_CLIENT QUIET breakpad-client)
+
 
 ###
 
