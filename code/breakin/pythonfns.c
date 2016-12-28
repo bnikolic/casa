@@ -12,6 +12,9 @@ void bk_init(void)
 
 size_t bk_getfn(const char* fname)
 {
+  size_t res=0;
+  PyGILState_STATE gilstate = PyGILState_Ensure();
+  
   PyObject *m, *pyfn, *fnaddress;
   if(!(  m= PyImport_ImportModule("breakin") ))
     goto failed;
@@ -20,10 +23,16 @@ size_t bk_getfn(const char* fname)
   if(!( fnaddress = PyObject_GetAttrString(pyfn, "address")))
     goto failed;
 
-  return PyNumber_AsSsize_t(fnaddress, NULL);
+  res=PyNumber_AsSsize_t(fnaddress, NULL);
+
+  PyGILState_Release(gilstate);
+  return res;
+
  failed:
   PyErr_Print();
+  PyGILState_Release(gilstate);  
   return 0;
+
   // Not decrementing references here since unknown when the objects
   // will be used for C layer. Therefore breakin python functions will
   // never get garbage collected. 
