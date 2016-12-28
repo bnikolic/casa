@@ -1341,9 +1341,13 @@ else()
     casa_add_module( graphics CASACORE X11 WCSLIB Boost)
   endif()
 endif()
+
+find_package(PythonLibs)
+
 casa_add_module( atmosphere )
 casa_add_module( stdcasa CASACORE Boost )
 casa_add_module( parallel CASACORE Boost )
+casa_add_module( breakin  CASACORE Boost PYTHON )
 casa_add_module( casadbus CASACORE DBUS Boost)
 casa_add_module( casaqt CASACORE QT4 QWT XERCES graphics stdcasa Boost)
 ###casa_add_module ( CasaDataObjects CASACORE)
