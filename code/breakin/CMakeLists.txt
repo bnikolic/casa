@@ -3,7 +3,8 @@
 # This file is not yet an offical part of CASA
 
 casa_add_library( breakin
-  pythonfns.c  )
+  pythonfns.c
+  synthkernels.c)
 
 install (FILES
 	pythonfns.h
