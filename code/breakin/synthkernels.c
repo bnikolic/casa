@@ -6,8 +6,8 @@
 #include "synthkernels.h"
 
 void bk_applyGradientToYLine(size_t iy,
-			     double complex * convFunctions,
-			     double complex * convWeights,
+			     float complex * convFunctions,
+			     float complex * convWeights,
 			     double pixXdir,
 			     double pixYdir,
 			     size_t convSize,

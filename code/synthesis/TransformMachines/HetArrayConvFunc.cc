@@ -73,6 +73,8 @@
 #include <synthesis/TransformMachines/HetArrayConvFunc.h>
 #include <synthesis/MeasurementEquations/VPManager.h>
 
+#include <breakin/synthkernels.h>
+
 #include <casa/OS/Timer.h>
 #ifdef _OPENMP
 #include <omp.h>
@@ -774,27 +776,17 @@ namespace casa { //# NAMESPACE CASA - BEGIN
 typedef unsigned long long ooLong; 
 
   void HetArrayConvFunc::applyGradientToYLine(const Int iy, Complex*& convFunctions, Complex*& convWeights, const Double pixXdir, const Double pixYdir, Int convSize, const Int ndishpair, const Int nChan, const Int nPol){
-    Double cy, sy;
-
-    SINCOS(Double(iy-convSize/2)*pixYdir, sy, cy);
-    Complex phy(cy,sy) ;
-    for (Int ix=0;ix<convSize;ix++) {
-      Double cx, sx;
-      SINCOS(Double(ix-convSize/2)*pixXdir, sx, cx);
-      Complex phx(cx,sx) ;
-      for (Int ipol=0; ipol< nPol; ++ipol){
-	//Int poloffset=ipol*nChan*ndishpair*convSize*convSize;
-	for (Int ichan=0; ichan < nChan; ++ichan){
-	  //Int chanoffset=ichan*ndishpair*convSize*convSize;
-	  for(Int iz=0; iz <ndishpair; ++iz){
-	    ooLong index=((ooLong(iz*nChan+ichan)*nPol+ipol)*ooLong(convSize)+ooLong(iy))*ooLong(convSize)+ooLong(ix);
-	    convFunctions[index]= convFunctions[index]*phx*phy;
-	    convWeights[index]= convWeights[index]*phx*phy;
-	  }
-	}
-      }
-    
-  }
+    // See document WG21/N1388 regarding layout of std::complex<float>
+    // (aka casa::Complex) and the use of reinterpret_cast below
+    bk_applyGradientToYLine(iy,
+			    reinterpret_cast<float complex*>(convFunctions),
+			    reinterpret_cast<float complex*>(convWeights),
+			    pixXdir,
+			    pixYdir,
+			    convSize,
+			    ndishpair,
+			    nChan,
+			    nPol);
   }
    Bool HetArrayConvFunc::toRecord(RecordInterface& rec){
      

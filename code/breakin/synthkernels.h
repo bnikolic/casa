@@ -8,15 +8,23 @@
 #include <memory.h>
 #include <complex.h>
 
+# ifdef __cplusplus
+#define BKDECL extern "C"
+#else
+#define BKDECL
+#endif
+
+
+
 /// Apply a gradient to a set of convolution functions all with same
 /// y-subsampling value but iterate over x subsampling, polarisation,
 /// channel and dish pairs
-void bk_applyGradientToYLine(size_t iy,
-			     double complex * convFunctions,
-			     double complex * convWeights,
-			     double pixXdir,
-			     double pixYdir,
-			     size_t convSize,
-			     size_t ndishpair,
-			     size_t nChan,
-			     size_t  nPol);
+BKDECL void bk_applyGradientToYLine(size_t iy,
+					float complex * convFunctions,
+					float complex * convWeights,
+					double pixXdir,
+					double pixYdir,
+					size_t convSize,
+					size_t ndishpair,
+					size_t nChan,
+					size_t  nPol);
