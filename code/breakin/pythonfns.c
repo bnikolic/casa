@@ -5,19 +5,25 @@
 
 #include <Python.h>
 
-void breakin_init(void)
+void bk_init(void)
 {
   Py_Initialize();
 }
 
-size_t breakin_getfn(const char* fname)
+size_t bk_getfn(const char* fname)
 {
-  PyObject *m = PyImport_ImportModule("breakin");
-  PyObject *pyfn = PyObject_GetAttrString(m, fname);
-  PyObject *fnaddress = PyObject_GetAttrString(pyfn, "address");
+  PyObject *m, *pyfn, *fnaddress;
+  if(!(  m= PyImport_ImportModule("breakin") ))
+    goto failed;
+  if(!( pyfn = PyObject_GetAttrString(m, fname)))
+    goto failed;
+  if(!( fnaddress = PyObject_GetAttrString(pyfn, "address")))
+    goto failed;
 
   return PyNumber_AsSsize_t(fnaddress, NULL);
-
+ failed:
+  PyErr_Print();
+  return 0;
   // Not decrementing references here since unknown when the objects
   // will be used for C layer. Therefore breakin python functions will
   // never get garbage collected. 
