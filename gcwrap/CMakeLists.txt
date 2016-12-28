@@ -1039,9 +1039,12 @@ if ( ${dbusxx} STREQUAL dbus-c++ )
   list( APPEND dbus_prefix /usr/lib/x86_64-linux-gnu/dbus-1.0)
 
 
+  find_package(PkgConfig)
+  pkg_check_modules(PC_DBUS QUIET dbus-1)
+
   casa_find( DBUSXX_ARCH
     INCLUDES dbus/dbus-arch-deps.h
-    PREFIX_HINTS /usr/lib64/dbus-1.0 ${DBUS_ARCH_DIR} ${dbus_prefix}
+    PREFIX_HINTS /usr/lib64/dbus-1.0 ${DBUS_ARCH_DIR} ${dbus_prefix} ${PC_DBUS_INCLUDE_DIRS}/../
     NO_CHECK   # This header does not compile if included directly
     NO_REQUIRE
     IGNORE /usr/lib64/casapy
