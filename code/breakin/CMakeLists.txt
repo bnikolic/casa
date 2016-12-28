@@ -4,12 +4,15 @@
 
 casa_add_library( breakin
   pythonfns.c
-  synthkernels.c)
+  synthkernels.c
+  )
 
 install (FILES
-	pythonfns.h
-	DESTINATION include/casacode/breakin
-	)
+  pythonfns.h
+  breakin.h
+  synthkernels.h
+  DESTINATION include/casacode/breakin
+  )
 
 
 

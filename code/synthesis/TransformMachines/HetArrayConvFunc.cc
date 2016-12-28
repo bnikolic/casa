@@ -73,6 +73,7 @@
 #include <synthesis/TransformMachines/HetArrayConvFunc.h>
 #include <synthesis/MeasurementEquations/VPManager.h>
 
+#include <breakin/breakin.h>
 #include <breakin/synthkernels.h>
 
 #include <casa/OS/Timer.h>
@@ -778,15 +779,15 @@ typedef unsigned long long ooLong;
   void HetArrayConvFunc::applyGradientToYLine(const Int iy, Complex*& convFunctions, Complex*& convWeights, const Double pixXdir, const Double pixYdir, Int convSize, const Int ndishpair, const Int nChan, const Int nPol){
     // See document WG21/N1388 regarding layout of std::complex<float>
     // (aka casa::Complex) and the use of reinterpret_cast below
-    bk_applyGradientToYLine(iy,
-			    reinterpret_cast<float complex*>(convFunctions),
-			    reinterpret_cast<float complex*>(convWeights),
-			    pixXdir,
-			    pixYdir,
-			    convSize,
-			    ndishpair,
-			    nChan,
-			    nPol);
+    BKFN(applyGradientToYLine)(iy,
+			       reinterpret_cast<float complex*>(convFunctions),
+			       reinterpret_cast<float complex*>(convWeights),
+			       pixXdir,
+			       pixYdir,
+			       convSize,
+			       ndishpair,
+			       nChan,
+			       nPol);
   }
    Bool HetArrayConvFunc::toRecord(RecordInterface& rec){
      

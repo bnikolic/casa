@@ -8,12 +8,7 @@
 #include <memory.h>
 #include <complex.h>
 
-# ifdef __cplusplus
-#define BKDECL extern "C"
-#else
-#define BKDECL
-#endif
-
+#include "breakin.h"
 
 
 /// Apply a gradient to a set of convolution functions all with same
