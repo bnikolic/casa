@@ -5,5 +5,10 @@
 casa_add_library( breakin
   pythonfns.c  )
 
+install (FILES
+	pythonfns.h
+	DESTINATION include/casacode/breakin
+	)
+
 
 
