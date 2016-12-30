@@ -19,10 +19,14 @@
 
 #include "breakin/pythonfns.h"
 
+/// Use the "C" functions defined in this directory 
 #define BKFNLOCAL(F) bk_ ## F
 
+/// Call back out into python to get the function named F
 #define BKFNPY(F)  (* ( void (*)(...) )(bk_getfn( #F ))) 
 
+/// Change this define to switch between the Python breakin or plain C
+/// functions
 #define BKFN(F) BKFNPY(F)
 
 
