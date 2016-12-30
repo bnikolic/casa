@@ -11,9 +11,9 @@
 #include "breakin.h"
 
 
-/// Apply a gradient to a set of convolution functions all with same
-/// y-subsampling value but iterate over x subsampling, polarisation,
-/// channel and dish pairs
+/// Apply a gradient to one horizontal line (i.e., fixed y) for a set
+/// of convolution functions for multiple polarisation, channel and
+/// dish pairs
 BKDECL void bk_applyGradientToYLine(size_t iy,
 					float complex * convFunctions,
 					float complex * convWeights,
