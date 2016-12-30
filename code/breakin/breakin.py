@@ -35,7 +35,9 @@ def xapplyGradientToYLine(iy,
 
 nniter=100000
 ff=cffi.FFI()
-@ff.callback("void (*)(size_t, float*, float *, double, double ,size_t ,size_t ,size_t ,size_t)")
+@ff.callback("""void (*)(size_t, float*, float *, 
+                         double, double ,
+                         size_t ,size_t ,size_t ,size_t)""")
 def applyGradientToYLine_ffi(iy,
                              convFunctions,
 			     convWeights,
